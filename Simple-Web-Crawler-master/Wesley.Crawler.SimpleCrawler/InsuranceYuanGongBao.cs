@@ -20,23 +20,29 @@ namespace Wesley.Crawler.SimpleCrawler
         /// </summary>
         public static void ConcurrentCrawler()
         {
-            //      new UrlObject { ObjectName="首页", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/0/sid/0/page/1") },
-            //        new UrlObject { ObjectName="重疾", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/1/sid/0/page/1") },
-            //        new UrlObject { ObjectName="医疗", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/6/sid/0/page/1") },
-            //        new UrlObject { ObjectName="意外", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/2/sid/0/page/1") },
-            //        new UrlObject { ObjectName="寿险", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/3/sid/0/page/1") },
-            var objectList = new List<UrlObject>() {
+
+            var objectListFinance = new List<UrlObject>() {
               
                 new UrlObject { ObjectName="返现", Uri=new Uri("http://ygb.xiaoma66.cn/index.php/user/finance") },
 
                
             };
+            var objectList = new List<UrlObject>() {
+
+                      new UrlObject { ObjectName="首页", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/0/sid/0/page/1") },
+                        new UrlObject { ObjectName="重疾", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/1/sid/0/page/1") },
+                        new UrlObject { ObjectName="医疗", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/6/sid/0/page/1") },
+                        new UrlObject { ObjectName="意外", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/2/sid/0/page/1") },
+                        new UrlObject { ObjectName="寿险", Uri=new Uri("http://ygb.xiaoma66.cn/prod/getInfoList/pt/3/sid/0/page/1") },
+               
+            };
+
             var hotelCrawler = new SimpleCrawler();
 
 
             CookieContainer cc = new CookieContainer();
-         
-            cc.Add( new Cookie("PHPSESSID", "m9u38l2f8n0gt266ad268j96l7", "/", "ygb.xiaoma66.cn"));
+
+            cc.Add(new Cookie("PHPSESSID", "m9u38l2f8n0gt266ad268j96l7", "/", "ygb.xiaoma66.cn"));
             cc.Add(new Cookie("Hm_lvt_c2483700e96aa81244eca4879c40a6f7", "1530152446", "/", "ygb.xiaoma66.cn"));
             cc.Add(new Cookie("Hm_lpvt_c2483700e96aa81244eca4879c40a6f7", "1530166350", "/", "ygb.xiaoma66.cn"));
 
@@ -62,24 +68,39 @@ namespace Wesley.Crawler.SimpleCrawler
                 Console.WriteLine("耗时：" + e.Milliseconds + "毫秒");
                 Console.WriteLine("线程：" + e.ThreadId);
                 Console.WriteLine("地址：" + e.Uri.ToString());
-                Log.WriteLogToTxt("地址：" + e.Uri.ToString());
+                if (e.Uri.ToString().IndexOf("finance") > -1)
+                {
+                    AnaylizeFinanceData(e.PageSource);
+                }
+                else
+                {
+                    AnaylizeData(e.PageSource);
+                }
                 Log.WriteLogToTxt(e.PageSource);
             };
-            Parallel.For(0, objectList.Count, (i) =>
+            //Parallel.For(0, objectList.Count, (i) =>
+            //{
+            //    var hotel = objectList[i];
+
+            //    hotelCrawler.Start(hotel.Uri);
+            //});
+            Parallel.For(0, objectListFinance.Count, (i) =>
             {
-                var hotel = objectList[i];
+                var hotel = objectListFinance[i];
 
                 hotelCrawler.Start(hotel.Uri);
             });
+
+
         }
 
 
         /// <summary>
         /// 分析产品信息
         /// </summary>
-        public static void AnaylizeData()
+        public static void AnaylizeData(string source)
         {
-            string source = File.ReadAllText(@"E:\project\study\Simple-Web-Crawler-master\Simple-Web-Crawler-master\Wesley.Crawler.SimpleCrawler\bin\Debug\Logs\20180625.txt", Encoding.Default);
+            //string source = File.ReadAllText(@"E:\project\study\Simple-Web-Crawler-master\Simple-Web-Crawler-master\Wesley.Crawler.SimpleCrawler\bin\Debug\Logs\20180625.txt", Encoding.Default);
 
 
             string tmpStr = string.Format(@"<h2>(?<name>.*)</h2>\s+<h3>(?<desc>.*)</h3>"); //获取
@@ -92,13 +113,26 @@ namespace Wesley.Crawler.SimpleCrawler
 
                 var name = match.Groups["name"].Value;
                 var desc = match.Groups["desc"].Value.ToLower();
-                var insurance = new Insurance
-                {
-                    Name = name,
-                    Desc = desc
-                };
+                Insurance insurance = new Insurance();
+
+                insurance.Name = name;
+                insurance.Desc = desc;
+
                 list.Add(insurance);
-                Console.WriteLine(insurance.Name + "|" + insurance.Desc);
+                if (insurance.Exists(string.Format("name='{0}'", name)))
+                {
+                    Console.WriteLine("已存在" + name);
+                    continue;
+                }
+                if (insurance.Insert(InsertOp.ID))
+                {
+                    Console.WriteLine("成功");
+                }
+                else
+                {
+                    Console.WriteLine("失败");
+                }
+                //Console.WriteLine(insurance.Name + "|" + insurance.Desc);
 
             }
 
@@ -110,11 +144,14 @@ namespace Wesley.Crawler.SimpleCrawler
         /// <summary>
         /// 分析返利信息
         /// </summary>
-        public static void AnaylizeFinanceData()
+        public static void AnaylizeFinanceData(string source)
         {
-            var path = @"E:\project\study\Simple-Web-Crawler-master\Simple-Web-Crawler-master\Wesley.Crawler.SimpleCrawler\bin\Debug\Logs\finance.html";
+            var path = @"E:\project\github\insurance\Simple-Web-Crawler-master\Wesley.Crawler.SimpleCrawler\bin\Debug\Logs\finance.html";
             var doc = new HtmlDocument();
             doc.Load(path);
+
+            //var doc = new HtmlDocument();
+            //doc.LoadHtml(source);
 
             var nodes = doc.DocumentNode.SelectNodes("//body/section[1]/table/tr[@class='table-tr']");
             var productList = new List<ProductFinance>();
@@ -131,7 +168,8 @@ namespace Wesley.Crawler.SimpleCrawler
                 foreach (var trNode in tableNodes)
                 {
                     var tdNodes = trNode.SelectNodes(".//td");
-                    productList.Add(new ProductFinance
+
+                    var product = new ProductFinance
                     {
                         Name = nameNode.InnerText.Trim(),
                         JiaoFeiFangShi = tdNodes[0].InnerText.Trim(),
@@ -139,7 +177,16 @@ namespace Wesley.Crawler.SimpleCrawler
                         TuiGuangFeiLv = tdNodes[2].InnerText.Trim(),
                         TeBieJiangLi = tdNodes[3].InnerText.Trim(),
                         YaoQingJiangLi = tdNodes[4].InnerText.Trim()
-                    });
+                    };
+                    Insurance insurance = new Insurance();
+                    if (insurance.Fill(string.Format("name='{0}'", product.Name)))
+                    {
+                        product.InsuranceGuid = insurance.InsuranceGuid;
+                    }
+                    product.Insert();
+                    productList.Add(product);
+
+
 
                 }
             }

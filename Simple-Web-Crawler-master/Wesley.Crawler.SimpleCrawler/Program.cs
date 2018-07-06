@@ -31,8 +31,10 @@ namespace Wesley.Crawler.SimpleCrawler
 
             //4.分析已经抓取的数据
 
-            InsuranceYuanGongBao.ConcurrentCrawler();
+            //InsuranceYuanGongBao.ConcurrentCrawler();
+            //string source = File.ReadAllText(@"E:\project\github\insurance\Simple-Web-Crawler-master\Wesley.Crawler.SimpleCrawler\bin\Debug\Logs\20180705.txt", Encoding.Default);
 
+            InsuranceYuanGongBao.AnaylizeFinanceData("");
             Console.ReadKey();
         }
 

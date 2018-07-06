@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wesley.Crawler.SimpleCrawler.Models
+namespace ClassLibrary1.Models
 {
     /// <summary>
     /// 产品返现信息
