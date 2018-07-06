@@ -17,7 +17,11 @@ namespace WebApplication1
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            var result = ProductService.GetAllProduct();
+            string page = context.Request["page"];
+            string limit = context.Request["limit"];
+            string key = context.Request["key"];
+
+            var result = ProductService.GetAllProduct(Convert.ToInt32(page), Convert.ToInt32(limit),key);
             context.Response.Write(result);
         }
 

@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>非模块化方式使用layui</title>
+    <title>layui</title>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <link href="js/layui-master/dist/css/layui.css" rel="stylesheet" />
 </head>
 <body>
@@ -12,30 +13,93 @@
 
     <script src="js/layui-master/dist/layui.all.js"></script>
     <table id="demo" lay-filter="test"></table>
+    <button class="layui-btn">查找瑞和</button>
     <script>
         layui.use('table', function () {
             var table = layui.table;
 
             //第一个实例
-            table.render({
+            var tableIns= table.render({
+                id: 'mytable',
                 elem: '#demo'
               , height: 500
-              , limit: 1000
-              , limits:[100,1000]
+              , limit: 10
+              , limits: [10, 50, 100]
               , url: 'Handler1.ashx' //数据接口
               , page: true //开启分页
               , cols: [[ //表头
-                { field: 'FinanceGuid', title: 'FinanceGuid', width: 80, sort: true, fixed: 'left' }
-                , { field: 'Name', title: 'Name', width: 80 }
-                , { field: 'JiaoFeiFangShi', title: '缴费方式', width: 80, sort: true }
-                , { field: 'BaoZhangQiXian', title: '保障期限', width: 80 }
-                , { field: 'TuiGuangFeiLv', title: '推广费率', width: 177 }
-                , { field: 'TeBieJiangLi', title: '特别奖励', width: 80, sort: true }
-                , { field: 'YaoQingJiangLi', title: '邀请奖励', width: 80, sort: true }
-              ]]
+               { field: 'a', title: 'a', width: 80, sort: true, fixed: 'left', type: 'numbers' },
+               { field: 'Name', title: 'Name', width: 200, fixed: 'left', sort: true }
+                , { field: 'JiaoFeiFangShi', title: '缴费方式', width: 100, sort: true }
+                , { field: 'BaoZhangQiXian', title: '保障期限', width: 100 }
+                , { field: 'TuiGuangFeiLv', title: '推广费率', width: 100 }
+                , { field: 'TeBieJiangLi', title: '特别奖励', width: 100, sort: true }
+                , { field: 'YaoQingJiangLi', title: '邀请奖励', width: 100, sort: true }
+                , { fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo' } //这里的toolbar值是模板元素的选择器
+              ]],
+                response: {
+                    statusName: 'success' //数据状态的字段名称，默认：code
+                  , statusCode: true //成功的状态码，默认：0
+                  , msgName: 'errorMsg' //状态信息的字段名称，默认：msg
+                  , countName: 'total' //数据总数的字段名称，默认：count
+                  , dataName: 'rows' //数据列表的字段名称，默认：data
+                }
             });
 
+            //监听工具条
+            table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+                debugger;
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+                var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+                if (layEvent === 'detail') { //查看
+                    //do somehing
+                } else if (layEvent === 'del') { //删除
+                    layer.confirm('真的删除行么', function (index) {
+                        obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                        layer.close(index);
+                        //向服务端发送删除指令
+                    });
+                } else if (layEvent === 'edit') { //编辑
+                    //do something
+
+                    //同步更新缓存对应的值
+                    obj.update({
+                        username: '123'
+                      , title: 'xxx'
+                    });
+                }
+            });
+
+            $(".layui-btn").click(function () {
+                //var checkStatus = table.checkStatus('mytable'); //test即为基础参数id对应的值
+
+                //console.log(checkStatus.data) //获取选中行的数据
+                //console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
+                //console.log(checkStatus.isAll) //表格是否全选
+                //这里以搜索为例
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        key: '瑞和'
+                    }
+                  , page: {
+                      curr: 1 //重新从第 1 页开始
+                  }
+                });
+            })
+
         });
+
+
+
+
     </script>
+    <script type="text/html" id="barDemo">
+        <!--<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
+
 </body>
 </html>
