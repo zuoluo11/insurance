@@ -128,4 +128,82 @@ Referer:http://localhost:55601/HtmlPage1.html
    在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
    在 CYQ.Data.DalCreate.CreateDal(String dbConn)
    在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+V5.7.8.7 Record On : 2018/7/6 14:30:50 http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+
+[Exception]:V5.7.8.7 Can't find the System.Data.SQLite.dll more info : 
+未能加载文件或程序集“System.Data.SQLite”或它的某一个依赖项。系统找不到指定的文件。:
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+V5.7.8.7 Record On : 2018/7/6 14:54:30 http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+
+[Exception]:V5.7.8.7 Can't find the System.Data.SQLite.dll more info : 
+未能加载文件或程序集“System.Data.SQLite”或它的某一个依赖项。系统找不到指定的文件。:
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+V5.7.8.7 Record On : 2018/7/6 14:56:33 http://localhost:55601/Handler1.ashx?page=1&limit=1000
+Referer:http://localhost:55601/HtmlPage1.html
+---------------------------------------
+
+[Exception]:V5.7.8.7 Can't find the System.Data.SQLite.dll more info : 
+未能加载文件或程序集“System.Data.SQLite”或它的某一个依赖项。系统找不到指定的文件。:
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
+   在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)
+   在 CYQ.Data.Error.Throw(String msg)
+   在 CYQ.Data.SQLiteDal.GetAssembly()
+   在 CYQ.Data.SQLiteDal.GetFactory(String providerName)
+   在 CYQ.Data.DbBase..ctor(ConnObject co)
+   在 CYQ.Data.SQLiteDal..ctor(ConnObject co)
+   在 CYQ.Data.DalCreate.GetDbBaseBy(ConnObject co)
+   在 CYQ.Data.DalCreate.CreateDal(String dbConn)
+   在 CYQ.Data.Tool.DBTool.GetColumns(String tableName, String conn, String& errInfo)
    在 CYQ.Data.Orm.SimpleOrmBase.SetDelayInit(Object entityInstance, String tableName, String conn, AopOp op)
