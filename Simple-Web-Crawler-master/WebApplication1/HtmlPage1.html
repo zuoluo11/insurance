@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>非模块化方式使用layui</title>
+    <link href="js/layui-master/dist/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+
+    <!-- 你的HTML代码 -->
+
+    <script src="js/layui-master/dist/layui.all.js"></script>
+    <table id="demo" lay-filter="test"></table>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+
+            //第一个实例
+            table.render({
+                elem: '#demo'
+              , height: 500
+              , limit: 1000
+              , limits:[100,1000]
+              , url: 'Handler1.ashx' //数据接口
+              , page: true //开启分页
+              , cols: [[ //表头
+                { field: 'FinanceGuid', title: 'FinanceGuid', width: 80, sort: true, fixed: 'left' }
+                , { field: 'Name', title: 'Name', width: 80 }
+                , { field: 'JiaoFeiFangShi', title: '缴费方式', width: 80, sort: true }
+                , { field: 'BaoZhangQiXian', title: '保障期限', width: 80 }
+                , { field: 'TuiGuangFeiLv', title: '推广费率', width: 177 }
+                , { field: 'TeBieJiangLi', title: '特别奖励', width: 80, sort: true }
+                , { field: 'YaoQingJiangLi', title: '邀请奖励', width: 80, sort: true }
+              ]]
+            });
+
+        });
+    </script>
+</body>
+</html>
