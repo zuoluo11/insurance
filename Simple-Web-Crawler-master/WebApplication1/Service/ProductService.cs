@@ -14,8 +14,6 @@ namespace ClassLibrary1.Service
 
         public static string GetAllProduct(int page, int limit, string key)
         {
-            //ProductFinance p = new ProductFinance();
-            //MDataTable mt = p.Select();
             MAction action = new MAction("ProductFinance");
             MDataTable mt = action.Select(page, limit, " Name like '%" + key + "%'");
             return mt.ToJson();
